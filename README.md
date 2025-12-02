@@ -133,8 +133,6 @@ Replace with your actual download path if needed.
 This project is for educational purposes as part of Module 3 coursework on Advance Machine Learning.
 Please cite appropriately if reused.
 
----
-
 #### Note on Version Control
 
 Large data files (such as `records100/`, `.csv`, `.h5`, and notebook checkpoints) are **excluded from version control** using the `.gitignore` file.  
@@ -148,6 +146,31 @@ If you add other large files to your project, update `.gitignore` accordingly!
 *.h5
 *.npz
 records100/
+
+---
+##  Main Results and Figures
+- A 1D Convolutional Denoising Autoencoder was trained in ECGs segments extracted from normal ECGs.
+- Training and validation sets  have only normal segments
+- Reconstruction errors were used to detect the pathological spot the abnormal ECGs in a test set that contained Normal plus pathological samples.
+  
+- Examples of a normal ECG and its segments (see notbook for further details on segmentation)
+![Normal ECG segmentation example](./ECG_segmentation_plot.png)
+
+- Example of the segments extracted from one ECG
+![Normal_segments extracted from one ECG and its leads](./ECG_normal_segments.png)
+
+- Autoencoder training history
+  ![Normal_segments extracted from one ECG and its leads](./training_Plot.png)
+
+- Vizualization of the reconstruction of the ECG segments
+   ![Reco](./ECG_reconstruction.png)
+
+- Using reconstruction errors to spot pathologies. The validation error 95% percentile was used as treshold to detect high error and low error segments.
+  The plot show the % of ECGs that containg at least one segments with high reconstruction error indicating that it not fitting to the RE of the normal category and can be spotted as an anormal sample.
+
+   ![Reco](./output_RE.png)
+  
+  
 
 --- 
 
