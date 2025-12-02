@@ -128,24 +128,66 @@ Replace with your actual download path if needed.
 
 ---
 
-## License
+### License
 
-See the [LICENSE](./LICENSE) file for licensing details.
+This project is for educational purposes as part of Module 3 coursework on Advance Machine Learning.
+Please cite appropriately if reused.
 
 ---
 
-### Note on Version Control
+#### Note on Version Control
 
 Large data files (such as `records100/`, `.csv`, `.h5`, and notebook checkpoints) are **excluded from version control** using the `.gitignore` file.  
 This prevents accidental uploads of big files and unnecessary clutter in the repository.
 
 If you add other large files to your project, update `.gitignore` accordingly!
-# Ignore macOS Finder file
+#### Ignore macOS Finder file
 .DS_Store
-
-# Ignore (large) data files not meant for repo
+#### Ignore (large) data files not meant for repo
 *.csv
 *.h5
 *.npz
 records100/
-```
+
+--- 
+
+##  Conclusions
+
+ Normal ECGs are well reconstructed and mostly ranked in the low-error category. False positives in normals are ~20–30%, depending on the cut-off.
+  - Reconstruction error alone does not clearly separate most pathologies.
+  - CD and HYP are detected reasonably well (~70% of samples), while MI and SSTC are harder to detect because they are often reconstructed too well.
+  - Pathological categories appear to be reconstructed well, which limits the ability of reconstruction errors to distinguish between them.
+
+- **Why CD and HYP Are Detected Better: both pathologies show anomalities in the QRS complex**
+  - **Conduction Disturbance (CD):**  
+    Abnormal QRS propagation or duration is captured by the autoencoder.
+  - **Hypertrophy (HYP):**  
+    Hypertrophy leads to increased QRS voltage and slight morphological changes. Since the autoencoder is trained only on normal ECGs, these voltage deviations and waveform alterations stand out, producing higher reconstruction errors compared to normal ECGs.
+
+- **Why MI and SSTC Are Harder to Detect: ST-T segments anomalities**
+  - **Myocardial Infarction (MI):**  
+    MI presents abrupt, localized changes like Q-wave formation, ST-segment elevation, or T-wave inversion. These patterns vary depending on infarct location and timing. Some subtle MI changes may be reconstructed too well, resulting in low errors and making detection difficult.
+  - **SSTC (Supraventricular Tachycardia / subtle ST changes):**  
+    SSTC or minor ST-segment abnormalities can be transient or subtle, sometimes only affecting rhythm or small waveform features. The autoencoder focuses on overall waveform structure, so these small, short-lived changes often produce insignificant reconstruction errors.
+
+- **Model Limitations and Recommendations**
+ 
+  - While it identifies 70% of CD and HYP samples as abnormal, further improvements are needed.  
+  - This pathologies show abnormalioties in the QRS complex, usually the largest and most distinctive feature in ECGs, so the model focuses on reconstructing it well. Subtle changes in the ST-T segment can get “washed out” in the reconstruction.
+
+  - **Segmentation Improvements:**  
+   
+    - Segment ECGs based on R-peak intervals (R to R) rather than fixed windows. 
+    - Segment ECG into QRS and ST-T → train separate autoencoders.
+    - Or Baseline correction:  "normalized" so the ST-T picks are not so different in scale to QRS complex.
+    - Weight ST-T in the loss function. 
+    - Adjust peak detection to account for heart rate variability. 
+  
+    - Fine-tuning reconstruction or model architecture to better separate subtle pathologies.
+    - Use/ add new features instead of raw ECG
+          - feed the network ST-T sensitive features:
+          - ST deviation from baseline
+          - T-wave amplitude or slope
+
+
+
