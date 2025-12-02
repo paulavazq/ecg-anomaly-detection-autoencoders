@@ -57,7 +57,7 @@ Please **do not upload these files to GitHub** when working with this repository
 
 ---
 
-## ECG Labels and Interpretations
+## ECG Labels and Interpretations: 
 
 | Label    | Meaning                | Notes / Typical ECG Findings                                                                                                              |
 | -------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -67,6 +67,10 @@ Please **do not upload these files to GitHub** when working with this repository
 | **CD**   | Conduction Disturbance | Includes bundle branch blocks, AV blocks, abnormal QRS propagation.                                                                       |
 | **STTC** | ST-T Changes           | Repolarization abnormalities: ST elevation/depression, T wave inversion or flattening; can indicate ischemia or electrolyte disturbances. |
 
+## Schematic of an Individual Heartbeat
+
+ Highlighted regions indicate areas typically affected by each pathology in the dataset.
+ 
 ![ECG Example](./ECG_pathologies.png)
 
 ---
@@ -75,9 +79,28 @@ Please **do not upload these files to GitHub** when working with this repository
 
 1. **Create Environment:**  
    Set up your Python environment for Jupyter Notebook.
-2. **Install Required Packages:**  
-   Use the provided `requirements.txt` file to install dependencies.
-3. **VS Code Configuration:**  
+2. **Install Required Dependencies:**  
+   Use the provided `requirements.txt` file to install all the necessary Python libraries:
+
+   ```sh
+   pip install -r requirements.txt
+   ```
+   <br>
+   This will install:
+
+   - wfdb
+   - iterative-stratification
+   - scikit-multilearn
+   - torch, torchvision, torchaudio
+   - transformers
+   - scipy, tqdm, mlflow, optuna
+   - pandas, numpy, scikit-learn
+   - matplotlib, seaborn, plotly
+   - neurokit2
+
+   _**Note:** You must use **Python 3.10.3 or newer**._
+   
+4. **VS Code Configuration:**  
    Configure your VS Code environment to work with Jupyter Notebooks.
 
 ---
@@ -90,6 +113,18 @@ Please **do not upload these files to GitHub** when working with this repository
   ```
 - Set up environment and install requirements.
 - Open `ECG_Anomaly_Detection_Autoencoders.ipynb` in VS Code or JupyterLab.
+  
+- **Important:**  
+After downloading the PTB-XL dataset files to your local machine, you must ensure that your code (and notebook) points to the correct local file paths for:
+- `records100/`
+- `scp_statements.csv`
+- `ptbxl_database.csv`
+
+Modify the data loading sections to use the location **where you stored the downloaded files**. For example:
+```python
+base_path = "/your/local/path/ptb-xl-1.0.3/"
+```
+Replace with your actual download path if needed.
 
 ---
 
@@ -99,19 +134,12 @@ See the [LICENSE](./LICENSE) file for licensing details.
 
 ---
 
-## .gitignore Example
+### Note on Version Control
 
-Files and folders that should **not** be committed to the repository (already included in `.gitignore`):
+Large data files (such as `records100/`, `.csv`, `.h5`, and notebook checkpoints) are **excluded from version control** using the `.gitignore` file.  
+This prevents accidental uploads of big files and unnecessary clutter in the repository.
 
-```gitignore
-# Ignore Jupyter notebook checkpoints
-.ipynb_checkpoints/
-
-# Ignore Python cache files
-__pycache__/
-*.pyc
-*.pyo
-
+If you add other large files to your project, update `.gitignore` accordingly!
 # Ignore macOS Finder file
 .DS_Store
 
