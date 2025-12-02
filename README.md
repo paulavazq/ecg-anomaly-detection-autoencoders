@@ -148,29 +148,36 @@ If you add other large files to your project, update `.gitignore` accordingly!
 records100/
 
 ---
-##  Main Results and Figures
-- A 1D Convolutional Denoising Autoencoder was trained in ECGs segments extracted from normal ECGs.
-- Training and validation sets  have only normal segments
-- Reconstruction errors were used to detect the pathological spot the abnormal ECGs in a test set that contained Normal plus pathological samples.
-  
-- Examples of a normal ECG and its segments (see notbook for further details on segmentation)
-![Normal ECG segmentation example](./ECG_segmentation_plot.png)
+## Main results and figures
 
-- Example of the segments extracted from one ECG
-![Normal_segments extracted from one ECG and its leads](./ECG_normal_segments.png)
+Summary
+- We trained a 1D convolutional denoising autoencoder on ECG segments extracted from normal ECG recordings.
+- Both the training and validation sets contained only normal segments.
+- Reconstruction error from the autoencoder was used as an anomaly score to detect pathological regions in a test set that contained both normal and pathological samples.
 
-- Autoencoder training history
-  ![Normal_segments extracted from one ECG and its leads](./training_Plot.png)
+How detection works
+- The autoencoder learns to reconstruct normal ECG segments. Segments that differ substantially from normal examples produce higher reconstruction error.
+- We set a threshold equal to the 90-95th percentile of validation reconstruction errors (i.e., the value that 90-95% of validation errors do not exceed). Segments with reconstruction error above this threshold are considered "high error".
+- An ECG is flagged as containing a potential abnormality if it contains at least one high-error segment.
 
-- Vizualization of the reconstruction of the ECG segments
-   ![Reco](./ECG_reconstruction.png)
+Figures
+- Example: normal ECG and its segmentation (see notebook for segmentation details)  
+  ![Normal ECG segmentation example](./ECG_segmentation_plot.png)
 
-- Using reconstruction errors to spot pathologies. The validation error 95% percentile was used as treshold to detect high error and low error segments.
-  The plot show the % of ECGs that containg at least one segments with high reconstruction error indicating that it not fitting to the RE of the normal category and can be spotted as an anormal sample.
+- Example: segments extracted from a single normal ECG (all leads)  
+  ![Segments extracted from one ECG (normal)](./ECG_normal_segments.png)
 
-   ![Reco](./output_RE.png)
-  
-  
+- Autoencoder training history (loss / reconstruction error on training and validation sets)  
+  ![Training history](./training_Plot.png)
+
+- Reconstruction examples: original vs reconstructed segments (normal and pathological examples)  
+  ![Reconstruction examples](./ECG_reconstruction.png)
+
+- Detection summary: percentage of ECGs in the test set that contain at least one high-error segment (in this graph= threshold = 90th percentile of validation errors per segment). This plot shows how reconstruction error can be used to flag abnormal ECGs.  
+  ![Detection results using reconstruction error](./output_RE.png)
+
+Notes and recommendations
+- See the project notebook for full details on segmentation, model architecture, training hyperparameters, and how reconstruction error is computed.
 
 --- 
 
