@@ -16,13 +16,13 @@ This repository contains a notebook exploring the use of Autoencoders trained on
 - **Data Access:**  
   Data was loaded directly from [the PTB-XL PhysioNet web page](https://physionet.org/content/ptb-xl/1.0.3/).
 
-### Files Used
+- **Files Used:**
 
 - `records100/` — Contains waveform ECG data sampled at 100 Hz.
 - `scp_statements.csv` — Annotation scheme information.
 - `ptbxl_database.csv` — Main metadata file, with one row per record identified by `ecg_id`.
 
-#### Metadata Structure
+- **Metadata Structure:**
 
 - **Identifiers** — `ecg_id`, `patient_id`, file paths for 500 Hz (`filename_hr`) and 100 Hz (`filename_lr`) signals.
 - **General Metadata** — Demographic and recording details like age, sex, device, etc.
@@ -33,9 +33,7 @@ This repository contains a notebook exploring the use of Autoencoders trained on
   - _Fold 9:_ Validation set  
   - _Fold 10:_ Test set (high label quality)
 
----
-
-## Data Download Instructions
+- **Data Download Instructions:**
 
 **Note:**  
 Due to size constraints (original data files >3GB), ECG waveform data is **not included** in this repository.
@@ -86,17 +84,6 @@ Please **do not upload these files to GitHub** when working with this repository
    pip install -r requirements.txt
    ```
    <br>
-   This will install:
-
-   - wfdb
-   - iterative-stratification
-   - scikit-multilearn
-   - torch, torchvision, torchaudio
-   - transformers
-   - scipy, tqdm, mlflow, optuna
-   - pandas, numpy, scikit-learn
-   - matplotlib, seaborn, plotly
-   - neurokit2
 
    _**Note:** You must use **Python 3.10.3 or newer**._
    
@@ -126,26 +113,6 @@ base_path = "/your/local/path/ptb-xl-1.0.3/"
 ```
 Replace with your actual download path if needed.
 
----
-
-### License
-
-This project is for educational purposes as part of Module 3 coursework on Advance Machine Learning.
-Please cite appropriately if reused.
-
-#### Note on Version Control
-
-Large data files (such as `records100/`, `.csv`, `.h5`, and notebook checkpoints) are **excluded from version control** using the `.gitignore` file.  
-This prevents accidental uploads of big files and unnecessary clutter in the repository.
-
-If you add other large files to your project, update `.gitignore` accordingly!
-#### Ignore macOS Finder file
-.DS_Store
-#### Ignore (large) data files not meant for repo
-*.csv
-*.h5
-*.npz
-records100/
 
 ---
 ## Main results and figures
@@ -161,19 +128,25 @@ How detection works
 - An ECG is flagged as containing a potential abnormality if it contains at least one high-error segment.
 
 Figures
-- Example: normal ECG and its segmentation (see notebook for segmentation details)  
+
+- Example: normal ECG and its segmentation (see notebook for segmentation details)
+  
   ![Normal ECG segmentation example](./ECG_segmentation_plot.png)
 
-- Example: segments extracted from a single normal ECG (all leads)  
+- Example: segments extracted from a single normal ECG (all leads)
+  
   ![Segments extracted from one ECG (normal)](./ECG_normal_segments.png)
 
-- Autoencoder training history (loss / reconstruction error on training and validation sets)  
+- Autoencoder training history (loss / reconstruction error on training and validation sets)
+    
   ![Training history](./training_Plot.png)
 
-- Reconstruction examples: original vs reconstructed segments (normal and pathological examples)  
+- Reconstruction examples: original vs reconstructed segments (normal and pathological examples)
+  
   ![Reconstruction examples](./ECG_reconstruction.png)
 
-- Detection summary: percentage of ECGs in the test set that contain at least one high-error segment (in this graph= threshold = 90th percentile of validation errors per segment). This plot shows how reconstruction error can be used to flag abnormal ECGs.  
+- Detection summary: percentage of ECGs in the test set that contain at least one high-error segment (in this graph= threshold = 90th percentile of validation errors per segment). This plot shows how reconstruction error can be used to flag abnormal ECGs.
+  
   ![Detection results using reconstruction error](./output_RE.png)
 
 Notes and recommendations
@@ -220,4 +193,22 @@ Notes and recommendations
           - T-wave amplitude or slope
 
 
+---
+### License
 
+This project is for educational purposes as part of Module 3 coursework on Advance Machine Learning.
+Please cite appropriately if reused.
+
+#### Note on Version Control
+
+Large data files (such as `records100/`, `.csv`, `.h5`, and notebook checkpoints) are **excluded from version control** using the `.gitignore` file.  
+This prevents accidental uploads of big files and unnecessary clutter in the repository.
+
+If you add other large files to your project, update `.gitignore` accordingly!
+#### Ignore macOS Finder file
+.DS_Store
+#### Ignore (large) data files not meant for repo
+*.csv
+*.h5
+*.npz
+records100/
