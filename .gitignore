@@ -1,10 +1,31 @@
 # Ignore Jupyter notebook checkpoints
 .ipynb_checkpoints/
 
-# Ignore Python cache files
+# Ignore Python bytecode and cache files
 __pycache__/
 *.pyc
 *.pyo
 
 # Ignore macOS Finder file
 .DS_Store
+
+# Ignore Windows system file
+Thumbs.db
+
+# Ignore virtual environments
+venv/
+env/
+
+# Ignore (large) data files not meant for repo
+*.csv
+*.tsv
+*.xls
+*.xlsx
+*.h5
+*.npz
+
+# Ignore raw data folder
+records100/
+
+# Ignore environment variable/config files (optional, if used)
+*.env
